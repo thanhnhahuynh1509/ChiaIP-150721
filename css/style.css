@@ -1,0 +1,190 @@
+@charset "UTF-8";
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    color: white;
+}
+
+body {
+    background-color: #495d59;
+}
+
+input {
+    border: none;
+    outline: none;
+    background: none;
+    border-bottom: 1px solid white;
+    color: white;
+    font-size: 16px;
+    font-family: 'MergeBlack';
+}
+
+span {
+    display: inline-block;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
+
+.big-contain {
+    position: relative;
+    width: 100%;
+    height: 49.7rem;
+    background-color: #495d59;
+    font-family: "MergeBlack";
+}
+
+.big-contain .text-name {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-transform: uppercase;
+    font-size: 3.5rem;
+    color: white;
+}
+
+.big-contain .contain {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%;
+    height: 100%;
+}
+
+.big-contain .input {
+    position: absolute;
+    top: 27%;
+    left: 6%;
+    transform: translateX(-50%);
+    box-shadow: 0px 0px 5px #499082;
+    width: 38rem;
+    border-radius: 11px;
+}
+
+.big-contain .title-input {
+    text-align: center;
+    font-size: 25px;
+}
+
+.input span {
+    font-size: 20px;
+    color: white;
+    width: 5rem;
+    text-align: center;
+    transform: translateY(3px);
+    margin-top: 31px;
+}
+
+.input .ip,
+.input .host {
+    border: none;
+    outline: none;
+    background: none;
+    border-bottom: 1px solid white;
+    color: white;
+    font-size: 16px;
+    font-family: 'MergeBlack';
+    width: 16rem;
+}
+
+.input .slash {
+    margin: 0px;
+    transform: translate(20rem, -1.5rem);
+}
+
+#subnet {
+    transform: translate(24rem, -7rem);
+    border: none;
+    background: none;
+    font-family: 'MergeBlack';
+    color: white;
+    font-size: 17px;
+    outline: none;
+}
+
+#subnet option {
+    border: 1px solid black;
+    background-color: rgb(38, 91, 126);
+    cursor: pointer;
+}
+
+#subnet option:hover {
+    cursor: pointer;
+    color: white;
+}
+
+
+/*Result*/
+
+.result {
+    position: absolute;
+    top: 16%;
+    left: 86%;
+    width: 30rem;
+    transform: translateX(-50%);
+    box-shadow: 0px 0px 5px #499082;
+    padding: 50px;
+    border-radius: 13px;
+    text-align: center;
+}
+
+.subip span,
+.bitN span,
+.buocnhay span,
+.submoi span,
+.hostdau span,
+.hostcuoi span {
+    font-size: 20px;
+    color: white;
+    width: 10rem;
+    text-align: center;
+    transform: translateY(3px);
+    margin-top: 31px;
+}
+
+.contain-btn {
+    position: absolute;
+    display: inline-block;
+    top: 65%;
+    left: -2%;
+}
+
+.contain-btn p {
+    display: inline-block;
+}
+
+.contain-btn .btn-submit,
+.contain-btn .btn-delete {
+    padding: 10px 20px;
+    background: rgb(58, 209, 146);
+    border-radius: 5px;
+    transition: .25s;
+    cursor: pointer;
+}
+
+.contain-btn .btn-submit:hover,
+.contain-btn .btn-delete:hover {
+    background: rgb(49, 167, 118)
+}
+
+.contain-btn .btn-submit {
+    margin-right: 10px;
+}
+
+.contain-btn .btn-delete {
+    margin-left: 10px;
+}
+
+@font-face {
+    font-family: "MergeBlack";
+    font-weight: bold;
+    src: url(../fonts/MergeBlack.otf) format("opentype");
+}
