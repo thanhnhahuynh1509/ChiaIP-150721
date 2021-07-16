@@ -13,6 +13,7 @@ const n27 = "255.255.255.224";
 const n28 = "255.255.255.240";
 const n29 = "255.255.255.248";
 const n30 = "255.255.255.252";
+const sua = "test thử cái git pull";
 
 const arraySubnetMask = [n16, n17, n18, n19, n20, n21, n22, n23, n24, n25, n26, n27, n28, n29, n30];
 
