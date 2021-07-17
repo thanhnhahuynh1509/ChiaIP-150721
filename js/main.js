@@ -17,57 +17,6 @@ const n30 = "255.255.255.252";
 const arraySubnetMask = [n16, n17, n18, n19, n20, n21, n22, n23, n24, n25, n26, n27, n28, n29, n30];
 
 
-document.getElementById("submit").addEventListener("click", chiaIP);
-document.getElementById("delete").addEventListener("click", xoaTatCa);
-
-
-function chiaIP() {
-    var inputIP = document.getElementById("id-ip").value;
-    var inputSubnet = document.getElementById("subnet").value;
-    var inputHost = document.getElementById("id-host").value;
-    if (inputIP == "") {
-        alert("Mời nhập ip");
-    } else {
-
-        var arrayIP = inputIP.split(".");
-        var arraySub = getSubnetMask(inputSubnet).split(".");
-        var m = getM(inputHost);
-        var sumHost = getSumHost(inputHost);
-        var allHost = getAllHost(inputSubnet);
-        var newSub = calNewSubnet(getAllHost(inputSubnet), getSumHost(inputHost), inputSubnet);
-        var buocNhay = calBuocNhay(calNewSubnet(getAllHost(inputSubnet), getSumHost(inputHost), inputSubnet));
-        var newSubnetMaskAll = newSubnetMask(newSub, arraySub, inputSubnet);
-        var numberSub = convertSubnetMaskToNumber(newSubnetMaskAll);
-        var subIP = getSubIP(arrayIP);
-        var hostDau = getHostDau(arrayIP);
-        var hostCuoi = getHostCuoi(arrayIP, inputSubnet, sumHost);
-        var numInpHost = parseInt(inputHost);
-        var numAllHost = parseInt(allHost);
-        console.log(numInpHost + numAllHost);
-        var check = numInpHost < numAllHost - 1;
-
-
-
-        if (validateIP(arrayIP)) {
-
-            if (check) {
-                document.getElementById("id-sub-ip").value = subIP + '/' + numberSub;
-                document.getElementById("id-bitN").value = 32 - parseInt(m) - parseInt(inputSubnet);
-                document.getElementById("id-buocnhay").value = buocNhay;
-                document.getElementById("id-subMoi").value = newSubnetMaskAll + " --> " + numberSub; //
-                document.getElementById("id-hostdau").value = hostDau + "/" + numberSub; //
-                document.getElementById("id-hostcuoi").value = hostCuoi + "/" + numberSub; //
-                document.getElementById("id-ip").value = subIP;
-            } else {
-                alert("Số host vượt quá giới hạn!");
-            }
-
-        } else {
-            alert("IP không hợp lệ!");
-        }
-    }
-
-}
 
 function getSubIP(arrayIP) {
     var arrayTmp = arrayIP;
@@ -98,21 +47,29 @@ function getHostDau(arrayIP) {
 }
 
 
-function getHostCuoi(arrayIP, inputSubnet, sumHost) {
+function getHostCuoi(arrayIP, sumHost) {
 
     var arrayTmp = arrayIP;
     var c = parseInt(arrayTmp[arrayTmp.length - 2]);
     var d = parseInt(arrayTmp[arrayTmp.length - 1]);
 
-    // if (numbSub >= 16 && numbSub < 24) {
-    //     c = c + buocNhay - 1;
-    //     d = d + 256 - 3;
-    //     arrayTmp[arrayTmp.length - 2] = c;
-    // } else if (numbSub >= 24) {
-    //     d = d + buocNhay - 3;
-    // }
-
     d = d + sumHost - 3;
+
+    while (d >= 256) {
+        arrayTmp[arrayTmp.length - 2] = parseInt(arrayTmp[arrayTmp.length - 2]) + 1
+        d = d - 256;
+    }
+
+    arrayTmp[arrayTmp.length - 1] = d;
+
+    return arrayToStringIP(arrayTmp);
+}
+
+function getNextIP(arrayIP, sumHost) {
+    var arrayTmp = arrayIP;
+    var d = parseInt(arrayTmp[arrayTmp.length - 1]);
+
+    d = d + 2;
 
     while (d >= 256) {
         arrayTmp[arrayTmp.length - 2] = parseInt(arrayTmp[arrayTmp.length - 2]) + 1
@@ -221,6 +178,7 @@ function calBuocNhay(newSubnet) {
     return 256 - parseInt(newSubnet);
 }
 
+// tính subnet mask mới
 function newSubnetMask(newSub, arraySub, inputSubnet) {
 
     var numSub = parseInt(inputSubnet);
@@ -250,13 +208,186 @@ function arrayToStringIP(array) {
 }
 
 
-function xoaTatCa() {
-    document.getElementById("id-sub-ip").value = "";
-    document.getElementById("id-bitN").value = "";
-    document.getElementById("id-buocnhay").value = "";
-    document.getElementById("id-subMoi").value = "";
-    document.getElementById("id-hostdau").value = "";
-    document.getElementById("id-hostcuoi").value = "";
-    document.getElementById("id-ip").value = "";
-    document.getElementById("id-host").value = "";
+
+// Chia IP theo nhiều host
+
+// xử lý sự kiện click
+document.getElementsByClassName("btn-add")[0].addEventListener("click", addFunction);
+document.getElementsByClassName("btn-delete-one-host")[0].addEventListener("click", deleteFunction);
+document.getElementsByClassName("btn-delete-all-hosts")[0].addEventListener("click", resetFunction);
+document.getElementsByClassName("btn-chia-2")[0].addEventListener("click", chiaFunction);
+
+// lấy cây dom
+var containerHosts = document.getElementsByClassName("hosts")[0];
+var inputFormHosts = document.getElementsByClassName("add-input-break");
+var currentHost = document.getElementsByClassName("host-value");
+var currentIP = document.getElementsByClassName("ip-value");
+var table = document.getElementsByTagName("table")[0];
+
+function addFunction() {
+    var newHost = document.createElement("input");
+    newHost.classList.add("add-input-break");
+    newHost.classList.add("host-value");
+    containerHosts.appendChild(newHost);
+}
+
+function deleteFunction() {
+
+    if (inputFormHosts.length > 0) {
+        var lastHost = inputFormHosts[inputFormHosts.length - 1];
+        containerHosts.removeChild(lastHost);
+    }
+
+}
+
+function resetFunction() {
+    currentHost[0].value = "";
+    currentIP[0].value = "";
+    for (let i = inputFormHosts.length - 1; i >= 0; i--) {
+        containerHosts.removeChild(inputFormHosts[i]);
+    }
+    while (table.rows.length > 1) {
+        table.deleteRow(table.rows.length - 1);
+    }
+}
+
+function chiaFunction() {
+    let inputIP = document.getElementsByName("ip")[0].value;
+    let inputSubnet = document.getElementById("subnet-2").value;
+    let arrayHosts = document.getElementsByClassName("host-value");
+    let checkInputHost = checkInputHosts(arrayHosts);
+
+    if (inputIP == "") {
+
+        alert("Mời nhập ip");
+        return;
+
+    } else if (!checkInputHost) {
+
+        alert("Mời nhập đầy đủ host");
+        return;
+
+    }
+
+    let tmpArrayIP = inputIP.split(".");
+
+    if (!validateIP(tmpArrayIP)) {
+        alert("IP không hợp lệ!");
+        return;
+    }
+
+    interchageSorts(arrayHosts);
+
+
+    let arrayObjectIP = [];
+    let tongHost = getAllHost(inputSubnet);
+
+    let nhan = 1;
+    let tong = 0;
+    for (let i = 0; i < arrayHosts.length; i++) {
+        let arrayIP = inputIP.split(".");
+        let arraySub = getSubnetMask(inputSubnet).split(".");
+        let allHost = getAllHost(inputSubnet);
+        let m = getM(arrayHosts[i].value);
+        for (let j = 0; j < m; j++) {
+            nhan *= 2;
+            if (tong >= tongHost) {
+                alert("Số host vượt quá giới hạn!");
+                return;
+            }
+        }
+
+
+        tong += nhan;
+
+        console.log(tong);
+        nhan = 1;
+
+        let sumHost = getSumHost(arrayHosts[i].value);
+        let newSub = calNewSubnet(allHost, getSumHost(arrayHosts[i].value), inputSubnet);
+        let buocNhay = calBuocNhay(calNewSubnet(allHost, getSumHost(arrayHosts[i].value), inputSubnet));
+        let newSubnetMaskAll = newSubnetMask(newSub, arraySub, inputSubnet);
+        let numberSub = convertSubnetMaskToNumber(newSubnetMaskAll);
+        let subIP = getSubIP(arrayIP);
+        let n = 32 - parseInt(m) - parseInt(inputSubnet);
+        let hostDau = getHostDau(arrayIP);
+        let hostCuoi = getHostCuoi(arrayIP, sumHost);
+
+        let IPObject = {
+            ipCon: subIP,
+            soBitMuon: n,
+            bn: buocNhay,
+            subnetMaskMoi: newSubnetMaskAll,
+            soSubnetMaskMoi: numberSub,
+            hostDauTien: hostDau,
+            hostCuoiCung: hostCuoi
+        };
+
+        arrayObjectIP[i] = IPObject;
+        inputIP = getNextIP(arrayIP, sumHost);
+        inputSubnet = arrayObjectIP[i].soSubnetMaskMoi;
+    }
+
+
+    // Xóa dữ liệu
+    while (table.rows.length > 1) {
+        table.deleteRow(table.rows.length - 1);
+    }
+
+
+    // thêm dữ liệu vào bảng
+    for (let i = 0; i < arrayObjectIP.length; i++) {
+        var newRow = table.insertRow(i + 1);
+
+        var net = newRow.insertCell(0);
+        var subId = newRow.insertCell(1);
+        var soBitMuon = newRow.insertCell(2);
+        var bn = newRow.insertCell(3);
+        var subnet = newRow.insertCell(4);
+        var fhost = newRow.insertCell(5);
+        var lhost = newRow.insertCell(6);
+
+        net.innerHTML = parseInt(i + 1);
+        subId.innerHTML = arrayObjectIP[i].ipCon + "/" + arrayObjectIP[i].soSubnetMaskMoi;
+        soBitMuon.innerHTML = arrayObjectIP[i].soBitMuon;
+        bn.innerHTML = arrayObjectIP[i].bn;
+        subnet.innerHTML = arrayObjectIP[i].subnetMaskMoi;
+        fhost.innerHTML = arrayObjectIP[i].hostDauTien + "/" + arrayObjectIP[i].soSubnetMaskMoi;
+        lhost.innerHTML = arrayObjectIP[i].hostCuoiCung + "/" + arrayObjectIP[i].soSubnetMaskMoi;
+    }
+
+
+
+
+}
+
+function interchageSorts(arrayHosts) {
+    for (let i = 0; i < arrayHosts.length - 1; i++) {
+        for (let j = i + 1; j < arrayHosts.length; j++) {
+            if (parseInt(arrayHosts[i].value) < parseInt(arrayHosts[j].value)) {
+                let tmp = arrayHosts[i].value;
+                arrayHosts[i].value = arrayHosts[j].value;
+                arrayHosts[j].value = tmp;
+            }
+        }
+    }
+}
+
+function checkInputHosts(arrayHosts) {
+    var check = true;
+    for (let i = 0; i < arrayHosts.length; i++) {
+        if (arrayHosts[i].value == 0) {
+            check = false;
+        }
+    }
+    return check;
+}
+
+function sumHosts(arrayHosts) {
+    var sum = 0;
+    for (let i = 0; i < arrayHosts.length; i++) {
+        sum += parseInt(arrayHosts[i].value);
+    }
+    console.log(sum);
+    return sum;
 }

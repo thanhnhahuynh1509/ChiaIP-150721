@@ -1,58 +1,11 @@
-@media (min-width: 1500px) {}
-
-@media (max-width: 1499px) and (min-width: 591px) {
-    .input {
-        left: 50% !important;
+@media (max-width: 740px) {
+    .contain-form {
+        padding-top: 20px;
+        padding-bottom: 20px;
+        padding-right: 0;
+        padding-left: 0;
     }
-    .result {
-        left: 50%;
-        top: 80%;
-    }
-    .contain-btn {
-        left: 50%;
-        transform: translateX(-50%);
-    }
-}
-
-@media (max-width: 590px) {
-    .big-contain .text-name {
-        font-size: 41px;
-    }
-    .input {
-        left: 50% !important;
-    }
-    .result {
-        left: 50%;
-        transform: translateX(-46%);
-        top: 80%;
-    }
-    .subip span,
-    .bitN span,
-    .buocnhay span,
-    .submoi span,
-    .hostdau span,
-    .hostcuoi span {
-        font-size: 16px;
-    }
-    .contain-btn {
-        left: 72%;
-        transform: translateX(-50%);
-        width: 11rem;
-    }
-    #subnet {
-        font-size: 14px;
-        transform: translate(16rem, -4rem);
-    }
-    .input .slash {
-        font-size: 12px;
-        transform: translate(8rem, 1rem);
-    }
-    .input span {
-        font-size: 15px;
-        color: white;
-        width: 16rem;
-        text-align: center;
-        transform: translate(5rem, 3px);
-        margin-top: 31px;
+    .contain-form .hosts {
+        transform: translate(0, 0);
     }
 }

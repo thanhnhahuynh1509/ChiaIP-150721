@@ -12,45 +12,65 @@
 
 <body>
 
-    <div class="big-contain">
-        <h1 class="text-name">Chia IP</h1>
-        <div class="contain">
-            <div class="input">
-                <p class="title-input">INPUT</p>
-                <div class="input-ip"><span> IP:</span><input id="id-ip" type="text" name="ip" class="ip" autocomplete="off"><br> <span class="slash">/</span></div>
-                <div class="input-host"><span> HOST:</span><input id="id-host" type="text" name="host" class="host" autocomplete="off"><br></div>
-                <select name="subnet-mask" id="subnet">
-                    <option value="16">16 --- 255.255.0.0</option>
-                    <option value="17">17 --- 255.255.128.0</option>
-                    <option value="18">18 --- 255.255.192.0</option>
-                    <option value="19">19 --- 255.255.224.0</option>
-                    <option value="20">20 --- 255.255.240.0	</option>
-                    <option value="21">21 --- 255.255.248.0	</option>
-                    <option value="22">22 --- 255.255.252.0	</option>
-                    <option value="23">23 --- 255.255.254.0	</option>
-                    <option value="24">24 --- 255.255.255.0	</option>
-                    <option value="25">25 --- 255.255.255.128	</option>
-                    <option value="26">26 --- 255.255.255.192	</option>
-                    <option value="27">27 --- 255.255.255.224	</option>
-                    <option value="28">28 --- 255.255.255.240	</option>
-                    <option value="29">29 --- 255.255.255.248	</option>
-                    <option value="30">30 --- 255.255.255.252	</option>
-                </select>
-            </div>
-            <div class="result">
-                <h1>Kết quả</h1>
-                <div class="subip"><span>Subnet IP:</span><input type="text" name="sub-ip" id="id-sub-ip" readonly></div>
-                <div class="bitN"><span>Số bit mượn (n):</span><input id="id-bitN" type="text" name="bit-N" readonly></div>
-                <div class="buocnhay"><span>Bước nhảy:</span><input id="id-buocnhay" type="text" name="buoc-nhay" readonly></div>
-                <div class="submoi"><span>Subnet mask mới:</span><input id="id-subMoi" type="text" name="sub-moi" readonly></div>
-                <div class="hostdau"><span>Host đầu:</span><input id="id-hostdau" type="text" name="host-dau" readonly></div>
-                <div class="hostcuoi"><span>Host cuối:</span><input id="id-hostcuoi" type="text" name="host-cuoi" readonly></div>
-            </div>
 
-            <div class="contain-btn">
-                <p class="btn-submit" id="submit"><a href="#">Chia</a></p>
-                <p class="btn-delete" id="delete"><a href="#">Xóa</a></p>
+    <!-- CHIA NHIEU HOST -->
+    <div class="contain-chiaIP-2">
+        <div class="big-contain-form">
+            <h1>Chia IP theo nhiều host</h1>
+            <div class="contain-form">
+                <p class="ip-subnet">
+                    <text>IP:</text> <input type="text" name="ip" class="ip-value" autocomplete="off"> /
+                    <select name="subnet-mask" id="subnet-2">
+                        <option value="16">16 --- 255.255.0.0</option>
+                        <option value="17">17 --- 255.255.128.0</option>
+                        <option value="18">18 --- 255.255.192.0</option>
+                        <option value="19">19 --- 255.255.224.0</option>
+                        <option value="20">20 --- 255.255.240.0	</option>
+                        <option value="21">21 --- 255.255.248.0	</option>
+                        <option value="22">22 --- 255.255.252.0	</option>
+                        <option value="23">23 --- 255.255.254.0	</option>
+                        <option value="24">24 --- 255.255.255.0	</option>
+                        <option value="25">25 --- 255.255.255.128	</option>
+                        <option value="26">26 --- 255.255.255.192	</option>
+                        <option value="27">27 --- 255.255.255.224	</option>
+                        <option value="28">28 --- 255.255.255.240	</option>
+                        <option value="29">29 --- 255.255.255.248	</option>
+                        <option value="30">30 --- 255.255.255.252	</option>
+                    </select>
+                </p>
+                <p class="hosts"><text>HOST:</text><input type="text" name="host" class="host-value" autocomplete="off"></p>
             </div>
+        </div>
+        <div class="contain-btn-about-form">
+            <p class="btn-add">
+                <a>Thêm</a>
+            </p>
+            <p class="btn-delete-one-host">
+                <a>Xóa</a>
+            </p>
+            <p class="btn-delete-all-hosts">
+                <a>Reset</a>
+            </p>
+            <p class="btn-chia-2">
+                <a>Chia</a>
+            </p>
+        </div>
+
+        <div class="result-many-ip">
+            <h1>Kết quả</h1>
+            <table>
+                <tr>
+                    <th>NET</th>
+                    <th>Subnet ID</th>
+                    <th>Số bit mượn (n)</th>
+                    <th>Bước nhảy</th>
+                    <th>Subnet mask mới</th>
+                    <th>Host đầu</th>
+                    <th>Host cuối</th>
+                </tr>
+
+            </table>
+
         </div>
     </div>
 
