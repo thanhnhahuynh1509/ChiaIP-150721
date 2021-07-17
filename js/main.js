@@ -280,28 +280,13 @@ function chiaFunction() {
 
 
     let arrayObjectIP = [];
-    let tongHost = getAllHost(inputSubnet);
 
-    let nhan = 1;
-    let tong = 0;
     for (let i = 0; i < arrayHosts.length; i++) {
         let arrayIP = inputIP.split(".");
         let arraySub = getSubnetMask(inputSubnet).split(".");
         let allHost = getAllHost(inputSubnet);
         let m = getM(arrayHosts[i].value);
-        for (let j = 0; j < m; j++) {
-            nhan *= 2;
-            if (tong >= tongHost) {
-                alert("Số host vượt quá giới hạn!");
-                return;
-            }
-        }
 
-
-        tong += nhan;
-
-        console.log(tong);
-        nhan = 1;
 
         let sumHost = getSumHost(arrayHosts[i].value);
         let newSub = calNewSubnet(allHost, getSumHost(arrayHosts[i].value), inputSubnet);
