@@ -276,6 +276,13 @@ function chiaFunction() {
         return;
     }
 
+    let tongHost = getAllHost(inputSubnet);
+
+    if (sumHosts(arrayHosts) > tongHost - 2) {
+        alert("Vượt quá giới hạn host");
+        return;
+    }
+
     interchageSorts(arrayHosts);
 
 
@@ -286,6 +293,7 @@ function chiaFunction() {
         let arraySub = getSubnetMask(inputSubnet).split(".");
         let allHost = getAllHost(inputSubnet);
         let m = getM(arrayHosts[i].value);
+
 
 
         let sumHost = getSumHost(arrayHosts[i].value);
@@ -373,6 +381,5 @@ function sumHosts(arrayHosts) {
     for (let i = 0; i < arrayHosts.length; i++) {
         sum += parseInt(arrayHosts[i].value);
     }
-    console.log(sum);
     return sum;
 }
